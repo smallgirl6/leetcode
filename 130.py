@@ -5,33 +5,34 @@ class Solution:
         """
         if not board or not board[0]:
             return
-
-        m, n = len(board), len(board[0])
+        column_len, row_len = len(board), len(board[0]) 
         queue = deque()
-
-        # 將邊界上的 'O' 加入隊列
-        for i in range(m):
-            for j in [0, n-1]:
-                if board[i][j] == 'O':
+        
+        # 檢查矩陣的所有列（column）的第一個和最後一個元素
+        for i in range(column_len): 
+            for j in [0, row_len-1 ]: # 只會遍歷兩個值：0 和 row_len-1。會查看第一行和最後一行
+                if board[i][j] == "O":
                     queue.append((i, j))
-
-        for i in [0, m-1]:
-            for j in range(n):
-                if board[i][j] == 'O':
+                    
+         # 檢查矩陣的第一行和最後一行的所有元素              
+        for i in [0, column_len-1 ]: # 只會遍歷兩個值：0 和 column_len-1。會查看第一行和最後一行
+            for j in range(row_len):
+                if board[i][j] == "O":
                     queue.append((i, j))
-
-        # 標記不能被翻轉的 'O'
         while queue:
             x, y = queue.popleft()
-            if 0 <= x < m and 0 <= y < n and board[x][y] == 'O':
+            # 不能超出範圍 且 board[x][y] == 'O'
+            if 0 <= x < column_len and 0 <= y < row_len and board[x][y] == 'O':  
                 board[x][y] = 'E'
+                # 每找到一個 'O'，它周圍可能也是 'O' ，加入到一個待檢查的清單裡
                 for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-                    queue.append((x+dx, y+dy))
+                    queue.append((x+dx, y+dy)) # 原來站在 (x, y)，按照 dx, dy 走過去之後的新座標。
 
-        # 翻轉 'O' 為 'X'，並將 'E' 還原為 'O'
-        for i in range(m):
-            for j in range(n):
-                if board[i][j] == 'O':
-                    board[i][j] = 'X'
-                elif board[i][j] == 'E':
+
+        for i in range(column_len):
+            for j in range(row_len):
+                if board[i][j] == 'O': # 如果該位置是 'O'，那一定是被 'X' 完全包圍的 'O'，
+                                       # 因為所有不應被轉換的 'O' 已經被轉換為 'E' 了
+                    board[i][j] = 'X'  # 。所以將它轉換為 'X'。
+                elif board[i][j] == 'E': # 將之前標記為 'E' 的位置恢復為 'O'。
                     board[i][j] = 'O'
