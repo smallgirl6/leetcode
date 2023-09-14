@@ -1,38 +1,15 @@
+# queue    
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        
-        # Define the State class locally
-        class State:
-            def __init__(self, current_string, left_count, right_count):
-                self.current_string = current_string
-                self.left_count = left_count
-                self.right_count = right_count
-
-        if n == 0:
-            return []
-        
+        # BFS先嘗試所有只有一個括號的組合，然後是兩個括號的組合，直到有 2n 個括號的組合
         result = []
-        queue = deque([State("", 0, 0)])
-        
-        while queue:
-            current_state = queue.popleft()
-            
-            if current_state.left_count == n and current_state.right_count == n:
-                result.append(current_state.current_string)
-                continue
-            
-            if current_state.left_count < n:
-                queue.append(State(
-                    current_state.current_string + "(",
-                    current_state.left_count + 1,
-                    current_state.right_count
-                ))
-            
-            if current_state.right_count < current_state.left_count:
-                queue.append(State(
-                    current_state.current_string + ")",
-                    current_state.left_count,
-                    current_state.right_count + 1
-                ))
-        
+        queue = deque([(0, 0, "")])
+        while queue: 
+            left, right, cur_string = queue.popleft()
+            if len(cur_string) == 2*n:
+                result.append(cur_string)
+            if left < n:
+                queue.append((left+1, right, cur_string + "("))
+            if right < left:
+                queue.append((left, right+1, cur_string + ")"))
         return result
