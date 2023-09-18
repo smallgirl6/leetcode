@@ -1,27 +1,21 @@
 class Solution:
     def calPoints(self, operations: List[str]) -> int:
         stack = []
-        total_sum = 0  # 初始化總得分為0
-        
+        total_sum = 0
         for op in operations:
-            if op == 'C':
-                # 取消前一個得分
-                last_score = stack.pop()
-                total_sum -= last_score
-            elif op == 'D':
-                # 前一個得分的兩倍
-                new_score = stack[-1] * 2
-                stack.append(new_score)
-                total_sum += new_score
-            elif op == '+':
-                # 前兩個得分的總和
-                new_score = stack[-1] + stack[-2]
-                stack.append(new_score)
-                total_sum += new_score
-            else:
-                # 這是一個整數，直接加到得分裡
-                new_score = int(op)
-                stack.append(new_score)
-                total_sum += new_score
-        
-        return total_sum
+            if op == "C":
+                remove_last_num = stack.pop()
+                total_sum -= remove_last_num
+            elif op == "D":
+                double_last_num = stack[-1] *2
+                stack.append(double_last_num)
+                total_sum += double_last_num
+            elif op == "+":
+                puls_last_2num = stack[-1]  + stack[-2]
+                stack.append(puls_last_2num)
+                total_sum += puls_last_2num
+            else: # number
+                new_num = int(op)
+                stack.append(new_num)
+                total_sum += new_num
+        return total_sum 
