@@ -30,4 +30,4 @@ class Solution:
         return output
             
 # current.children = [child1, child2, child3]，
-# reversed(current.children) => [child3, child2, child1]。
+# reversed(current.children) => [child3, child2, child1]
