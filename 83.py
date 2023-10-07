@@ -5,12 +5,11 @@
 #         self.next = next
 class Solution:
     def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        current = head
-    
-        while current is not None and current.next is not None:
-            if current.val == current.next.val:
-                current.next = current.next.next
+        current_point = head
+        while current_point and current_point.next: # # 確保當前節點和下一個節點都存在
+            if current_point.val == current_point.next.val:
+                current_point.next = current_point.next.next
             else:
-                current = current.next
-                
+                current_point = current_point.next
         return head
+            
