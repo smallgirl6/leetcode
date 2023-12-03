@@ -1,4 +1,5 @@
 class Solution:
+    ##
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         self.max_diameter = 0
 
