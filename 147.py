@@ -18,7 +18,7 @@ class Solution:
         while current:
             # 從虛擬頭節點開始，找到當前節點應該插入的位置
             prev = dummy
-            # 如果 prev.next 是 None，表示 prev 已經是鏈表的最後一個節點，
+            # 如果 prev.next 是 None，表示 prev 已經是鏈表的最後一個節點
             while prev.next and prev.next.val < current.val:
                 prev = prev.next
 
